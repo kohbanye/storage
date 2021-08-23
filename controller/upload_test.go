@@ -20,9 +20,9 @@ func TestUpload(t *testing.T) {
 	part.Write([]byte(testStr))
 
 	e := test.New()
-	e.POST("/upload", func(c echo.Context) error { return Upload(c) })
+	e.POST("/api/upload", func(c echo.Context) error { return Upload(c) })
 
-	req := httptest.NewRequest(echo.POST, "/upload", nil)
+	req := httptest.NewRequest(echo.POST, "/api/upload", nil)
 	req.Header.Add(echo.HeaderContentType, writer.FormDataContentType())
 	rec := httptest.NewRecorder()
 
