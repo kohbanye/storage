@@ -22,7 +22,7 @@ func Upload(c echo.Context) error {
 	defer f.Close()
 
 	root := config.GetConfig().DataDir
-	path := root + c.Path() + "/" + file.Filename
+	path := root + c.QueryParam("path") + "/" + file.Filename
 	dst, err := os.Create(path)
 	if err != nil {
 		return err

@@ -8,5 +8,5 @@ import (
 func Init(e *echo.Echo) {
 	api := e.Group("/api")
 
-	api.POST("/upload", func(c echo.Context) error { return controller.Upload(c) })
+	api.POST("/", func(c echo.Context) error { return controller.Upload(c) })
 }
