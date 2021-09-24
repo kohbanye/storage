@@ -13,7 +13,7 @@ import (
 type File struct {
 	Name  string `json:"name"`
 	Size  int64  `json:"size"`
-	IsDir bool   `json:"is_dir"`
+	IsDir bool   `json:"isDir"`
 }
 
 // GetFiles returns folders and files in the given path
