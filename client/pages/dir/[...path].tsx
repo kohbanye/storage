@@ -23,10 +23,32 @@ const Directory = (props: DirectoryProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const files = await getDirectory(`/${(context.query.path as string[]).join('/')}`)
+  // TODO
+  /* const files = await getDirectory(`/${(context.query.path as string[]).join('/')}`) */
   return {
     props: {
-      files,
+      files: [
+        {
+          name: 'some_directory',
+          isDir: true,
+          size: 0,
+        },
+        {
+          name: 'a.txt',
+          isDir: false,
+          size: 1024,
+        },
+        {
+          name: 'b.txt',
+          isDir: false,
+          size: 1024,
+        },
+        {
+          name: 'c.txt',
+          isDir: false,
+          size: 1024,
+        },
+      ],
     },
   }
 }
