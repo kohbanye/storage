@@ -4,6 +4,7 @@ const baseURL = 'http://localhost:8000/api/'
 
 export interface File {
   name: string
+  modified: string
   size: number
   isDir: boolean
 }

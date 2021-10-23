@@ -5,15 +5,17 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/kohbanye/storage/config"
 	"github.com/labstack/echo/v4"
 )
 
 type File struct {
-	Name  string `json:"name"`
-	Size  int64  `json:"size"`
-	IsDir bool   `json:"isDir"`
+	Name     string `json:"name"`
+	Modified string `json:"modified"`
+	Size     int64  `json:"size"`
+	IsDir    bool   `json:"isDir"`
 }
 
 // GetFiles returns folders and files in the given path
@@ -28,9 +30,10 @@ func GetFiles(c echo.Context) error {
 	var files, dirs []File
 	for _, fileInfo := range fileInfos {
 		newFile := File{
-			Name:  fileInfo.Name(),
-			Size:  fileInfo.Size(),
-			IsDir: fileInfo.IsDir(),
+			Name:     fileInfo.Name(),
+			Modified: fileInfo.ModTime().Format(time.RFC3339),
+			Size:     fileInfo.Size(),
+			IsDir:    fileInfo.IsDir(),
 		}
 
 		if fileInfo.IsDir() {
