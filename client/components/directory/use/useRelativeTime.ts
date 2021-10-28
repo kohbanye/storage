@@ -12,7 +12,6 @@ const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 
 const getRelativeTime = (from: Date, to = new Date()) => {
   const elapsed = to.getTime() - from.getTime()
-  console.log(elapsed)
 
   let result = 'now'
   const entries = units.entries()
