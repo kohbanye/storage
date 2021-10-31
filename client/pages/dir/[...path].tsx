@@ -1,24 +1,14 @@
-import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { File, getDirectory } from 'lib/api'
+import DirectoryTable from 'components/directory/table'
 
 interface DirectoryProps {
   files: File[]
 }
 
 const Directory = (props: DirectoryProps) => {
-  const router = useRouter()
-
   return (
-    <div>
-      <ul>
-        {props.files.map((file) => (
-          <li key={file.name}>
-            <a href={`${router.asPath}/${file.name}`}>{file.name}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <DirectoryTable files={props.files} />
   )
 }
 
