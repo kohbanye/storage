@@ -22,7 +22,7 @@ const getRelativeTime = (from: Date, to = new Date()) => {
       break
     }
   }
-  
+
   return result
 }
 
