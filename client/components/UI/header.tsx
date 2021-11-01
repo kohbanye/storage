@@ -1,14 +1,14 @@
 import Image from 'next/image'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { css } from '@emotion/react'
-import { icon } from 'styles/globals'
+import { icon, headerHeight } from 'styles/globals'
 import logo from 'assets/storage.png'
 import userIcon from 'assets/monterey.png'
 
 const Header = () => {
   return (
     <div css={container}>
-      <Image src={logo} alt="storage logo" width={192} height={54} />
+      <Image src={logo} alt="storage logo" width={160} height={45} />
       <div css={headerRight}>
         <MoreVertIcon css={iconStyle} />
         <Image
@@ -25,10 +25,10 @@ const Header = () => {
 
 const container = css`
   display: flex;
-  grid-area: header;
   align-items: center;
   background-color: #07575b;
   padding: 0.5rem 1rem;
+  height: ${headerHeight};
 `
 const headerRight = css`
   display: flex;

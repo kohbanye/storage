@@ -5,3 +5,5 @@ export const icon = css`
   height: 1.75rem;
   width: 1.75rem;
 `
+
+export const headerHeight = '4rem'
