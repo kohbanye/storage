@@ -15,15 +15,34 @@ const DirectoryTable = ({ files }: TableProps) => {
   const router = useRouter()
   const relativeTimes = useRelativeTimes(files)
 
-  const headers = ['name', 'modified', 'size']
+  const headers = [
+    {
+      label: 'name',
+      style: css`
+        width: 50%;
+      `,
+    },
+    {
+      label: 'modified',
+      style: css`
+        width: 25%;
+      `,
+    },
+    {
+      label: 'size',
+      style: css`
+        width: 25%;
+      `,
+    },
+  ]
 
   return (
     <div css={container}>
       <table css={table}>
         <tr css={tableRow}>
           {headers.map((header) => (
-            <th key={header} css={tableHeader}>
-              {header}
+            <th key={header.label} css={[tableHeader, header.style]}>
+              {header.label}
             </th>
           ))}
         </tr>
@@ -44,8 +63,8 @@ const DirectoryTable = ({ files }: TableProps) => {
                 </div>
               )}
             </td>
-            <td>{relativeTimes[index]}</td>
-            <td>{file.size}</td>
+            <td align="center">{relativeTimes[index]}</td>
+            <td align="center">{file.size}</td>
           </tr>
         ))}
       </table>
@@ -61,6 +80,7 @@ const table = css`
   table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
+  max-width: 800px;
 `
 const tableHeader = css`
   font-weight: normal;

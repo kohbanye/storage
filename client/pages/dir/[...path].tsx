@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 import { File, getDirectory } from 'lib/api'
 import DirectoryTable from 'components/directory/table'
+import { css } from '@emotion/react'
 
 interface DirectoryProps {
   files: File[]
@@ -8,7 +9,9 @@ interface DirectoryProps {
 
 const Directory = (props: DirectoryProps) => {
   return (
-    <DirectoryTable files={props.files} />
+    <div css={table}>
+      <DirectoryTable files={props.files} />
+    </div>
   )
 }
 
@@ -46,5 +49,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   }
 }
+
+const table = css`
+  padding: 2rem;
+`
 
 export default Directory
