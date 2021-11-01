@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { css } from '@emotion/react'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import UploadRoundedIcon from '@mui/icons-material/UploadRounded'
 import { icon } from 'styles/globals'
+import HoverMenu from './hoverMenu'
 
-type ButtonName = 'create' | 'upload'
+export type ButtonName = 'create' | 'upload'
 interface ButtonProps {
   name: ButtonName
 }
@@ -18,15 +20,27 @@ const switchIcon = (name: ButtonName) => {
 }
 
 export const Button = ({ name }: ButtonProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   return (
     <div css={container}>
-      {switchIcon(name)}
-      <div css={buttonName}>{name}</div>
+      <div css={buttonStyle} onMouseDown={() => setIsMenuOpen(true)}>
+        {switchIcon(name)}
+        <div css={buttonName}>{name}</div>
+      </div>
+      <HoverMenu
+        name={name}
+        isOpen={isMenuOpen}
+        onClickOutside={() => setIsMenuOpen(false)}
+      />
     </div>
   )
 }
 
 const container = css`
+  position: relative;
+`
+const buttonStyle = css`
   display: flex;
   align-items: center;
   background-color: #66a5ad;
