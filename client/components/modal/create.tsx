@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { css } from '@emotion/react'
+import CancelIcon from '@mui/icons-material/Cancel'
 import { HoverMenuName } from 'components/directory/hoverMenu'
 import Input from 'components/UI/input'
 import CreateButton from './createButton'
@@ -17,7 +18,10 @@ const CreateModal = ({ menuName, isOpen, onClose }: ModalProps) => {
     <div css={[container, isOpen && active]}>
       <div css={overlay} onClick={onClose} />
       <div css={modalContainer}>
-        <div css={header}>create {menuName}</div>
+        <div css={header}>
+          <div css={headerTitle}>create {menuName}</div>
+          <CancelIcon css={icon} onClick={onClose} />
+        </div>
         <div css={inputStyle}>
           <Input
             placeholder={`${menuName} name`}
@@ -63,8 +67,16 @@ const modalContainer = css`
   padding: 0.5rem;
 `
 const header = css`
+  display: flex;
   font-size: 1.25rem;
-  padding: 0.5rem 0.75rem;
+`
+const headerTitle = css`
+  padding: 0.75rem;
+`
+const icon = css`
+  color: #ff6e6e;
+  cursor: pointer;
+  margin-left: auto;
 `
 const inputStyle = css`
   padding: 0.5rem 1rem;
