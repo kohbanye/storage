@@ -45,12 +45,13 @@ const HoverMenu = ({ name, isOpen, onClickOutside }: HoverMenuProps) => {
   )
 }
 
+const buttonHeight = '3.25rem'
 const container = css`
   position: absolute;
   background-color: #ffffff;
   border: 1px solid #c9c9c9;
   border-radius: 0.5rem;
-  top: calc(3.25rem + 2px);
+  top: calc(${buttonHeight} + 2px);
   left: 15%;
   width: 70%;
 
