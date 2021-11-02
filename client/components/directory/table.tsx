@@ -3,12 +3,12 @@ import Link from 'next/link'
 import { icon } from 'styles/globals'
 import FolderIcon from '@mui/icons-material/Folder'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
-import { File } from 'lib/api'
+import { MyFile } from 'lib/api'
 import { useRouter } from 'next/router'
 import { useRelativeTimes } from './use/useRelativeTime'
 
 interface TableProps {
-  files: File[]
+  files: MyFile[]
 }
 
 const DirectoryTable = ({ files }: TableProps) => {

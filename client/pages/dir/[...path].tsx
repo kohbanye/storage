@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { css } from '@emotion/react'
-import { File, getDirectory } from 'lib/api'
+import { MyFile, getDirectory } from 'lib/api'
 import DirectoryTable from 'components/directory/table'
 import Button from 'components/directory/button'
 import CreateModal from 'components/modal/create'
 import { HoverMenuName } from 'components/directory/hoverMenu'
 
 interface DirectoryProps {
-  files: File[]
+  files: MyFile[]
 }
 
 const Directory = (props: DirectoryProps) => {
@@ -26,10 +26,7 @@ const Directory = (props: DirectoryProps) => {
   return (
     <>
       <div css={buttons}>
-        <Button
-          name="create"
-          onClickMenu={handleOpenModal}
-        />
+        <Button name="create" onClickMenu={handleOpenModal} />
         <Button name="upload" onClickMenu={() => {}} />
       </div>
       <div css={table}>
