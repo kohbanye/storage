@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/kohbanye/storage/config"
-	"github.com/kohbanye/storage/service/directory"
 	"github.com/labstack/echo/v4"
 )
 
@@ -38,10 +37,6 @@ func GetFiles(c echo.Context) error {
 		}
 
 		if fileInfo.IsDir() {
-			newFile.Size, err = directory.GetFolderSize(path + "/" + fileInfo.Name())
-			if err != nil {
-				return err
-			}
 			dirs = append(dirs, newFile)
 		} else {
 			files = append(files, newFile)

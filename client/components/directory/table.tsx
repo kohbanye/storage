@@ -65,7 +65,9 @@ const DirectoryTable = ({ files }: TableProps) => {
               )}
             </td>
             <td align="center">{relativeTimes[index]}</td>
-            <td align="center">{fileSizeToString(file.size)}</td>
+            <td align="center">
+              {file.isDir ? '---' : fileSizeToString(file.size)}
+            </td>
           </tr>
         ))}
       </table>
