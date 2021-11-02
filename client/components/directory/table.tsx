@@ -6,6 +6,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import { MyFile } from 'lib/api'
 import { useRouter } from 'next/router'
 import { useRelativeTimes } from './use/useRelativeTime'
+import { fileSizeToString } from 'lib/unit'
 
 interface TableProps {
   files: MyFile[]
@@ -64,7 +65,7 @@ const DirectoryTable = ({ files }: TableProps) => {
               )}
             </td>
             <td align="center">{relativeTimes[index]}</td>
-            <td align="center">{file.size}</td>
+            <td align="center">{fileSizeToString(file.size)}</td>
           </tr>
         ))}
       </table>
