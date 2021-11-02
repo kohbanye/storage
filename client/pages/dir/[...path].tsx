@@ -1,14 +1,19 @@
+import { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { css } from '@emotion/react'
 import { File, getDirectory } from 'lib/api'
 import DirectoryTable from 'components/directory/table'
 import Button from 'components/directory/button'
+import CreateModal from 'components/modal/create'
 
 interface DirectoryProps {
   files: File[]
 }
 
 const Directory = (props: DirectoryProps) => {
+  const [isFolderModalOpen, setIsFolderModalOpen] = useState(false)
+  const [isFileModalOpen, setIsFileModalOpen] = useState(false)
+
   return (
     <>
       <div css={buttons}>
@@ -18,6 +23,16 @@ const Directory = (props: DirectoryProps) => {
       <div css={table}>
         <DirectoryTable files={props.files} />
       </div>
+      <CreateModal
+        menuName="folder"
+        isOpen={isFolderModalOpen}
+        onClose={() => setIsFolderModalOpen(false)}
+      />
+      <CreateModal
+        menuName="file"
+        isOpen={isFileModalOpen}
+        onClose={() => setIsFileModalOpen(false)}
+      />
     </>
   )
 }

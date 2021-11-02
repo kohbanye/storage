@@ -8,7 +8,7 @@ import { ButtonName } from './button'
 import { useClickOutside } from './use/useClickOutside'
 
 const menus = ['folder', 'file'] as const
-type HoverMenuName = typeof menus[number]
+export type HoverMenuName = typeof menus[number]
 
 interface HoverMenuProps {
   name: ButtonName
