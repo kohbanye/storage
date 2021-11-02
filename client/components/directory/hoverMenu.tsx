@@ -1,10 +1,13 @@
+import { useRouter } from 'next/router'
 import { css } from '@emotion/react'
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined'
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined'
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined'
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined'
+import { uploadFile } from 'lib/api'
 import { useRef } from 'react'
 import { ButtonName } from './button'
+import UploadFile from './upload'
 import { useClickOutside } from './use/useClickOutside'
 
 const menus = ['folder', 'file'] as const
@@ -46,12 +49,29 @@ const HoverMenu = ({
     onCloseMenu()
   }
 
+  const router = useRouter()
+  const uploadFiles = (files: FileList) => {
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i) as File
+      uploadFile(
+        `/${router.asPath.replace('/dir', '')}/${file.webkitRelativePath}`,
+        file
+      )
+    }
+  }
+
   return (
     <div ref={divRef} css={[container, isOpen && active]}>
       {menus.map((menu) => (
         <div key={menu} css={menuStyle} onClick={() => onClick(menu)}>
           {switchMenu(name, menu)}
-          <div css={menuName}>{menu}</div>
+          {name === 'create' ? (
+            <div css={menuName}>{menu}</div>
+          ) : (
+            <UploadFile isFolder={menu === 'folder'} onChange={uploadFiles}>
+              <div css={menuName}>{menu}</div>
+            </UploadFile>
+          )}
         </div>
       ))}
     </div>
