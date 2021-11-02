@@ -13,6 +13,8 @@ export type HoverMenuName = typeof menus[number]
 interface HoverMenuProps {
   name: ButtonName
   isOpen: boolean
+  onClickMenu: (name: HoverMenuName) => void
+  onCloseMenu: () => void
   onClickOutside: () => void
 }
 
@@ -29,14 +31,25 @@ const switchMenu = (buttonName: ButtonName, hoverMenuName: HoverMenuName) => {
   }
 }
 
-const HoverMenu = ({ name, isOpen, onClickOutside }: HoverMenuProps) => {
+const HoverMenu = ({
+  name,
+  isOpen,
+  onClickMenu,
+  onCloseMenu,
+  onClickOutside,
+}: HoverMenuProps) => {
   const divRef = useRef<HTMLDivElement>(null)
   useClickOutside(isOpen, divRef, onClickOutside)
+
+  const onClick = (menuName: HoverMenuName) => {
+    onClickMenu(menuName)
+    onCloseMenu()
+  }
 
   return (
     <div ref={divRef} css={[container, isOpen && active]}>
       {menus.map((menu) => (
-        <div key={menu} css={menuStyle}>
+        <div key={menu} css={menuStyle} onClick={() => onClick(menu)}>
           {switchMenu(name, menu)}
           <div css={menuName}>{menu}</div>
         </div>
@@ -55,11 +68,13 @@ const container = css`
   left: 15%;
   width: 70%;
 
+  visibility: hidden;
   opacity: 0;
   transform: translateY(-0.5rem);
   transition: all 0.2s;
 `
 const active = css`
+  visibility: visible;
   opacity: 1;
   transform: translateY(0);
 `

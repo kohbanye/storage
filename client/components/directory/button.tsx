@@ -3,11 +3,12 @@ import { css } from '@emotion/react'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import UploadRoundedIcon from '@mui/icons-material/UploadRounded'
 import { icon } from 'styles/globals'
-import HoverMenu from './hoverMenu'
+import HoverMenu, { HoverMenuName } from './hoverMenu'
 
 export type ButtonName = 'create' | 'upload'
 interface ButtonProps {
   name: ButtonName
+  onClickMenu: (name: HoverMenuName) => void
 }
 
 const switchIcon = (name: ButtonName) => {
@@ -19,7 +20,7 @@ const switchIcon = (name: ButtonName) => {
   }
 }
 
-export const Button = ({ name }: ButtonProps) => {
+export const Button = ({ name, onClickMenu }: ButtonProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -31,6 +32,8 @@ export const Button = ({ name }: ButtonProps) => {
       <HoverMenu
         name={name}
         isOpen={isMenuOpen}
+        onClickMenu={onClickMenu}
+        onCloseMenu={() => setIsMenuOpen(false)}
         onClickOutside={() => setIsMenuOpen(false)}
       />
     </div>

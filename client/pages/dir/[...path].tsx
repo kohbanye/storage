@@ -5,6 +5,7 @@ import { File, getDirectory } from 'lib/api'
 import DirectoryTable from 'components/directory/table'
 import Button from 'components/directory/button'
 import CreateModal from 'components/modal/create'
+import { HoverMenuName } from 'components/directory/hoverMenu'
 
 interface DirectoryProps {
   files: File[]
@@ -14,11 +15,22 @@ const Directory = (props: DirectoryProps) => {
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false)
   const [isFileModalOpen, setIsFileModalOpen] = useState(false)
 
+  const handleOpenModal = (type: HoverMenuName) => {
+    if (type === 'folder') {
+      setIsFolderModalOpen(true)
+    } else if (type === 'file') {
+      setIsFileModalOpen(true)
+    }
+  }
+
   return (
     <>
       <div css={buttons}>
-        <Button name="create" />
-        <Button name="upload" />
+        <Button
+          name="create"
+          onClickMenu={handleOpenModal}
+        />
+        <Button name="upload" onClickMenu={() => {}} />
       </div>
       <div css={table}>
         <DirectoryTable files={props.files} />
