@@ -97,6 +97,11 @@ const tableRow = css`
   th {
     padding-bottom: 0.5rem;
   }
+  &:hover {
+    td {
+      background-color: #f5f5f5;
+    }
+  }
 `
 const iconStyle = css`
   margin-right: 0.5rem;
