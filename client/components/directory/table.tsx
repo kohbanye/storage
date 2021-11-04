@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { icon } from 'styles/globals'
 import FolderIcon from '@mui/icons-material/Folder'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
@@ -7,6 +8,7 @@ import { MyFile } from 'lib/api'
 import { useRouter } from 'next/router'
 import { useRelativeTimes } from './use/useRelativeTime'
 import { fileSizeToString } from 'lib/unit'
+import emptyFolder from 'assets/empty_folder.svg'
 
 interface TableProps {
   files: MyFile[]
@@ -14,7 +16,7 @@ interface TableProps {
 
 const DirectoryTable = ({ files }: TableProps) => {
   const router = useRouter()
-  const relativeTimes = useRelativeTimes(files)
+  const relativeTimes = useRelativeTimes(files) as string[]
 
   const headers = [
     {
@@ -39,38 +41,46 @@ const DirectoryTable = ({ files }: TableProps) => {
 
   return (
     <div css={container}>
-      <table css={table}>
-        <tr css={tableRow}>
-          {headers.map((header) => (
-            <th key={header.label} css={[tableHeader, header.style]}>
-              {header.label}
-            </th>
-          ))}
-        </tr>
-        {files.map((file, index) => (
-          <tr key={file.name} css={tableRow}>
-            <td>
-              {file.isDir ? (
-                <Link href={`${router.asPath}/${file.name}`}>
-                  <a css={[directory, directoryName]}>
-                    <FolderIcon css={iconStyle} />
-                    {file.name}
-                  </a>
-                </Link>
-              ) : (
-                <div css={directoryName}>
-                  <InsertDriveFileIcon css={iconStyle} />
-                  {file.name}
-                </div>
-              )}
-            </td>
-            <td align="center">{relativeTimes[index]}</td>
-            <td align="center">
-              {file.isDir ? '---' : fileSizeToString(file.size)}
-            </td>
+      {files !== null ? (
+        <table css={table}>
+          <tr css={tableRow}>
+            {headers.map((header) => (
+              <th key={header.label} css={[tableHeader, header.style]}>
+                {header.label}
+              </th>
+            ))}
           </tr>
-        ))}
-      </table>
+          {files.map((file, index) => (
+            <tr key={file.name} css={tableRow}>
+              <td>
+                {file.isDir ? (
+                  <Link href={`${router.asPath}/${file.name}`}>
+                    <a css={[directory, directoryName]}>
+                      <FolderIcon css={iconStyle} />
+                      {file.name}
+                    </a>
+                  </Link>
+                ) : (
+                  <div css={directoryName}>
+                    <InsertDriveFileIcon css={iconStyle} />
+                    {file.name}
+                  </div>
+                )}
+              </td>
+              <td align="center">{relativeTimes[index]}</td>
+              <td align="center">
+                {file.isDir ? '---' : fileSizeToString(file.size)}
+              </td>
+            </tr>
+          ))}
+        </table>
+      ) : (
+        <div css={emptyMessage}>
+          <Image src={emptyFolder} alt="empty folder" width="100" height="100" />
+          <div css={messageHeader}>This folder is empty.</div>
+          <div css={messageContent}>You can add files and folders.</div>
+        </div>
+      )}
     </div>
   )
 }
@@ -115,6 +125,17 @@ const directory = css`
 const directoryName = css`
   display: flex;
   align-items: center;
+`
+const emptyMessage = css`
+  text-align: center;
+`
+const messageHeader = css`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+`
+const messageContent = css`
+  font-size: 1.25rem;
 `
 
 export default DirectoryTable

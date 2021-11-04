@@ -27,5 +27,8 @@ const getRelativeTime = (from: Date, to = new Date()) => {
 }
 
 export const useRelativeTimes = (files: MyFile[]) => {
+  if (files === null) {
+    return null
+  }
   return files.map((file) => getRelativeTime(new Date(file.modified)))
 }
