@@ -12,19 +12,28 @@ const Sidebar = () => {
   const menus = [
     {
       name: 'all files',
-      icon: <FolderOutlinedIcon css={iconStyle} />,
+      // eslint-disable-next-line react/display-name
+      icon: function () {
+        return <FolderOutlinedIcon css={iconStyle(this.isSelected)} />
+      },
       isSelected: router.pathname.includes('/dir'),
       path: '/dir',
     },
     {
       name: 'recent',
-      icon: <AccessTimeIcon css={iconStyle} />,
+      // eslint-disable-next-line react/display-name
+      icon: function () {
+        return <AccessTimeIcon css={iconStyle(this.isSelected)} />
+      },
       isSelected: router.pathname.includes('/recent'),
       path: '/recent',
     },
     {
       name: 'favorites',
-      icon: <StarBorderIcon css={iconStyle} />,
+      // eslint-disable-next-line react/display-name
+      icon: function () {
+        return <StarBorderIcon css={iconStyle(this.isSelected)} />
+      },
       isSelected: router.pathname.includes('/favorites'),
       path: '/favorites',
     },
@@ -35,8 +44,10 @@ const Sidebar = () => {
       {menus.map((menu) => (
         <Link key={menu.name} href={menu.path}>
           <a css={[menuStyle, menu.isSelected && selected]}>
-            {menu.icon}
-            <div css={menuName}>{menu.name}</div>
+            {menu.icon()}
+            <div css={[menuName, menu.isSelected && selectedMenuName]}>
+              {menu.name}
+            </div>
           </a>
         </Link>
       ))}
@@ -45,32 +56,37 @@ const Sidebar = () => {
 }
 
 const container = css`
-  background-color: #66a5ad;
-  padding-top: 0.5rem;
+  background-color: #ececec;
+  padding: 0.5rem 1rem 0 0;
 `
-const iconStyle = css`
-  margin-right: 0.5rem;
+const iconStyle = (isSelected: boolean) => css`
   ${icon}
+  margin-right: 0.5rem;
+  ${!isSelected && 'color: #777777;'}
 `
 const menuStyle = css`
   display: flex;
   align-items: center;
   font-size: 1.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem 0.5rem 1rem;
+  margin: 0.25rem 0.5rem;
   &:hover {
-    background-color: #5d9aa8;
+    background-color: #dbdbdb;
   }
 `
 const selected = css`
-  background-color: #51898f;
+  background-color: #096e74;
   &:hover {
-    background-color: #51898f;
+    background-color: #096e74;
   }
 `
 const menuName = css`
+  color: #777777;
+`
+const selectedMenuName = css`
   color: #ffffff;
-  padding-right: 0.25rem;
 `
 
 export default Sidebar
