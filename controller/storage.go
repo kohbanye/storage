@@ -49,11 +49,11 @@ func GetFiles(c echo.Context) error {
 // CreateFile creates a new folder or file
 func CreateFile(c echo.Context) error {
 	path := c.QueryParam("path")
-	isDirStr := c.QueryParam("is_dir")
+	isDir := c.QueryParam("is_dir") == "true"
 
 	root := config.GetConfig().DataDir
 
-	if isDirStr == "true" {
+	if isDir {
 		err := os.Mkdir(root+path, fs.ModePerm)
 		if err != nil {
 			return err
