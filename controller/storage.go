@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/kohbanye/storage/config"
@@ -54,13 +55,17 @@ func CreateFile(c echo.Context) error {
 	root := config.GetConfig().DataDir
 
 	if isDir {
-		err := os.Mkdir(root+path, fs.ModePerm)
+		err := os.MkdirAll(root+path, fs.ModePerm)
 		if err != nil {
 			return err
 		}
 
 		return c.JSON(http.StatusOK, "directory created")
 	} else {
+		err := os.MkdirAll(root+filepath.Dir(path), fs.ModePerm)
+		if err != nil {
+			return err
+		}
 		file, err := os.Create(root + path)
 		if err != nil {
 			return err
