@@ -2,8 +2,10 @@ package controller
 
 import (
 	"io"
+	"io/fs"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/kohbanye/storage/config"
 	"github.com/labstack/echo/v4"
@@ -22,7 +24,12 @@ func Upload(c echo.Context) error {
 	defer f.Close()
 
 	root := config.GetConfig().DataDir
-	path := root + c.QueryParam("path") + "/" + file.Filename
+	path := root + c.QueryParam("path")
+
+	err = os.MkdirAll(filepath.Dir(path), fs.ModePerm)
+	if err != nil {
+		return err
+	}
 	dst, err := os.Create(path)
 	if err != nil {
 		return err

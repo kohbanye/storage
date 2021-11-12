@@ -50,14 +50,23 @@ const HoverMenu = ({
   }
 
   const router = useRouter()
-  const uploadFiles = (files: FileList) => {
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i) as File
+  const uploadFiles = async (files: FileList) => {
+    if (files.length === 1) {
       uploadFile(
-        `/${router.asPath.replace('/dir', '')}/${file.webkitRelativePath}`,
-        file
+        `${router.asPath.replace('/dir', '')}/${files[0].name}`,
+        files[0]
       )
+    } else {
+      for (let i = 0; i < files.length; i++) {
+        const file = files.item(i) as File
+        uploadFile(
+          `${router.asPath.replace('/dir', '')}/${file.webkitRelativePath}`,
+          file
+        )
+      }
     }
+
+    router.push(router.asPath)
   }
 
   return (
