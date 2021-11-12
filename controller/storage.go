@@ -23,6 +23,9 @@ type File struct {
 func GetFiles(c echo.Context) error {
 	path := c.QueryParam("path")
 
+	root := config.GetConfig().DataDir
+	path = root + "/" + path
+
 	fileInfos, err := ioutil.ReadDir(path)
 	if err != nil {
 		return err
