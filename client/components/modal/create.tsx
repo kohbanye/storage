@@ -21,6 +21,8 @@ const CreateModal = ({ menuName, isOpen, onClose }: ModalProps) => {
     onClose()
     const path = `${router.asPath.replace('/dir', '')}/${fileName}`
     createFile(path, type === 'folder')
+
+    router.push(router.asPath)
   }
 
   return (
