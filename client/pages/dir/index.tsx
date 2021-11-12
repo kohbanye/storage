@@ -6,12 +6,12 @@ interface HomeDirectoryProps {
   files: MyFile[]
 }
 
-const HomeDirectory = ({files}: HomeDirectoryProps) => {
+const HomeDirectory = ({ files }: HomeDirectoryProps) => {
   return <Directory files={files} />
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const files = await getDirectory('/')
+  const files = await getDirectory('')
   return {
     props: {
       files,

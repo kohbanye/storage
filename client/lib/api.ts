@@ -19,3 +19,10 @@ export const uploadFile = async (path: string, file: File): Promise<void> => {
   formData.append('file', file)
   await axios.post(`${baseURL}?path=${path}`, formData)
 }
+
+export const createFile = async (
+  path: string,
+  isDir = false
+): Promise<void> => {
+  await axios.post(`${baseURL}new?path=${path}&is_dir=${isDir}`)
+}

@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { css } from '@emotion/react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { HoverMenuName } from 'components/directory/hoverMenu'
 import Input from 'components/UI/input'
 import CreateButton from './createButton'
+import { createFile } from 'lib/api'
 
 interface ModalProps {
   menuName: HoverMenuName
@@ -13,6 +15,13 @@ interface ModalProps {
 
 const CreateModal = ({ menuName, isOpen, onClose }: ModalProps) => {
   const [name, setName] = useState('')
+
+  const router = useRouter()
+  const onClick = (fileName: string, type: HoverMenuName) => {
+    onClose()
+    const path = `${router.asPath.replace('/dir', '')}/${fileName}`
+    createFile(path, type === 'folder')
+  }
 
   return (
     <div css={[container, isOpen && active]}>
@@ -30,7 +39,7 @@ const CreateModal = ({ menuName, isOpen, onClose }: ModalProps) => {
           />
         </div>
         <div css={buttonStyle}>
-          <CreateButton onClick={onClose} />
+          <CreateButton onClick={() => onClick(name, menuName)} />
         </div>
       </div>
     </div>
