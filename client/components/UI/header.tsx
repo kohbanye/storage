@@ -4,7 +4,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { css } from '@emotion/react'
 import { icon, headerHeight } from 'styles/globals'
 import logo from 'assets/storage.png'
-import userIcon from 'assets/monterey.png'
 
 const Header = () => {
   return (
@@ -19,14 +18,7 @@ const Header = () => {
         />
       </Link>
       <div css={headerRight}>
-        <MoreVertIcon css={iconStyle} />
-        <Image
-          src={userIcon}
-          alt="user icon"
-          css={userIconStyle}
-          width="32"
-          height="32"
-        />
+        <MoreVertIcon css={icon} />
       </div>
     </div>
   )
@@ -46,14 +38,6 @@ const headerRight = css`
   display: flex;
   align-items: center;
   margin-left: auto;
-`
-const iconStyle = css`
-  margin-left: auto;
-  margin-right: 0.25rem;
-  ${icon}
-`
-const userIconStyle = css`
-  border-radius: 50%;
 `
 
 export default Header
