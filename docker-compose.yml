@@ -6,3 +6,13 @@ services:
     restart: always
     ports:
       - '8000:8000'
+  mysql:
+    image: mariadb:10.6
+    build: ./mysql/
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    restart: always
+    ports:
+      - '3306:3306'
