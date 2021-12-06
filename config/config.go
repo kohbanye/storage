@@ -5,7 +5,14 @@ import (
 )
 
 type Config struct {
-	DataDir string `yaml:"data_dir" default:"/var/"`
+	DataDir  string `yaml:"data_dir" default:"/var/"`
+	Database struct {
+		Host     string `yaml:"host"`
+		Port     string `yaml:"port"`
+		Username string `yaml:"username"`
+		Password string `yaml:"password"`
+		Name     string `yaml:"name"`
+	}
 }
 
 var c *viper.Viper

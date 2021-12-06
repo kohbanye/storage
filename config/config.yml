@@ -1,1 +1,7 @@
 data_dir: /var
+database:
+  host: localhost
+  port: 3306
+  username: user
+  password: password
+  name: storage
