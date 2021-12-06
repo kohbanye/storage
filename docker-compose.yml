@@ -7,10 +7,10 @@ services:
     ports:
       - '8000:8000'
   mysql:
-    image: mariadb:10.6
-    build: ./mysql/
+    platform: linux/x86_64
+    image: mysql:5.7
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
     restart: always
