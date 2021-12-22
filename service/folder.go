@@ -1,4 +1,4 @@
-package directory
+package service
 
 import "io/ioutil"
 
