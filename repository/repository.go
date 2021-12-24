@@ -9,7 +9,7 @@ import (
 )
 
 type Repository struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
 func NewRepository(config *config.Config) (*Repository, error) {
@@ -21,6 +21,8 @@ func NewRepository(config *config.Config) (*Repository, error) {
 }
 
 func connectDatabase(config *config.Config) (*gorm.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", config.Database.Username, config.Database.Password, config.Database.Host, config.Database.Port, config.Database.Name)
+	dbConf := config.Database
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbConf.Username, dbConf.Password, dbConf.Host, dbConf.Port, dbConf.Name)
+
 	return gorm.Open(mysql.Open(dsn), &gorm.Config{})
 }
