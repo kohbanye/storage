@@ -9,8 +9,20 @@ import (
 	"time"
 
 	"github.com/kohbanye/storage/config"
+	"github.com/kohbanye/storage/model"
+	"github.com/kohbanye/storage/repository"
 	"github.com/labstack/echo/v4"
 )
+
+type StorageController struct {
+	Repository *repository.Repository
+}
+
+func NewStorageController(repository *repository.Repository) *StorageController {
+	return &StorageController{
+		Repository: repository,
+	}
+}
 
 type File struct {
 	Name     string `json:"name"`
@@ -20,7 +32,7 @@ type File struct {
 }
 
 // GetFiles returns folders and files in the given path
-func GetFiles(c echo.Context) error {
+func (controller *StorageController) GetFiles(c echo.Context) error {
 	path := c.QueryParam("path")
 
 	root := config.GetConfig().DataDir
@@ -51,11 +63,21 @@ func GetFiles(c echo.Context) error {
 }
 
 // CreateFile creates a new folder or file
-func CreateFile(c echo.Context) error {
+func (controller *StorageController) CreateFile(c echo.Context) error {
 	path := c.QueryParam("path")
 	isDir := c.QueryParam("is_dir") == "true"
 
 	root := config.GetConfig().DataDir
+
+	dbFile := &model.DBFile{
+		Name:  filepath.Base(path),
+		Path:  root + path,
+		IsDir: isDir,
+	}
+	_, err := dbFile.Create(controller.Repository)
+	if err != nil {
+		return err
+	}
 
 	if isDir {
 		err := os.MkdirAll(root+path, fs.ModePerm)
