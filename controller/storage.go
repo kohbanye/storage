@@ -99,3 +99,13 @@ func (controller *StorageController) CreateFile(c echo.Context) error {
 		return c.JSON(http.StatusOK, "file created")
 	}
 }
+
+func (controller *StorageController) GetRecentFiles(c echo.Context) error {
+	dbFile := &model.DBFile{}
+	files, err := dbFile.GetRecentFiles(controller.Repository)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, files)
+}
