@@ -87,9 +87,15 @@ func (controller *StorageController) CreateFile(c echo.Context) error {
 		}
 		defer file.Close()
 
+		fileInfo, err := os.Stat(root + path)
+		if err != nil {
+			return err
+		}
 		dbFile := &model.DBFile{
-			Name:  filepath.Base(path),
-			Path:  root + path,
+			Name:     filepath.Base(path),
+			Path:     root + path,
+			Modified: fileInfo.ModTime().Format(time.RFC3339),
+			Size:     fileInfo.Size(),
 		}
 		_, err = dbFile.Create(controller.Repository)
 		if err != nil {

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/kohbanye/storage/config"
 	"github.com/kohbanye/storage/model"
@@ -53,9 +54,15 @@ func (controller *UploadController) Upload(c echo.Context) error {
 		return err
 	}
 
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
 	dbFile := &model.DBFile{
-		Name:  filepath.Base(path),
-		Path:  root + path,
+		Name:     filepath.Base(path),
+		Path:     root + path,
+		Modified: fileInfo.ModTime().Format(time.RFC3339),
+		Size:     fileInfo.Size(),
 	}
 	_, err = dbFile.Create(controller.Repository)
 	if err != nil {
