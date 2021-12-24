@@ -69,16 +69,6 @@ func (controller *StorageController) CreateFile(c echo.Context) error {
 
 	root := config.GetConfig().DataDir
 
-	dbFile := &model.DBFile{
-		Name:  filepath.Base(path),
-		Path:  root + path,
-		IsDir: isDir,
-	}
-	_, err := dbFile.Create(controller.Repository)
-	if err != nil {
-		return err
-	}
-
 	if isDir {
 		err := os.MkdirAll(root+path, fs.ModePerm)
 		if err != nil {
@@ -96,6 +86,15 @@ func (controller *StorageController) CreateFile(c echo.Context) error {
 			return err
 		}
 		defer file.Close()
+
+		dbFile := &model.DBFile{
+			Name:  filepath.Base(path),
+			Path:  root + path,
+		}
+		_, err = dbFile.Create(controller.Repository)
+		if err != nil {
+			return err
+		}
 
 		return c.JSON(http.StatusOK, "file created")
 	}

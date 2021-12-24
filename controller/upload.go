@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/kohbanye/storage/config"
+	"github.com/kohbanye/storage/model"
 	"github.com/kohbanye/storage/repository"
 	"github.com/labstack/echo/v4"
 )
@@ -48,6 +49,15 @@ func (controller *UploadController) Upload(c echo.Context) error {
 	defer dst.Close()
 
 	_, err = io.Copy(dst, f)
+	if err != nil {
+		return err
+	}
+
+	dbFile := &model.DBFile{
+		Name:  filepath.Base(path),
+		Path:  root + path,
+	}
+	_, err = dbFile.Create(controller.Repository)
 	if err != nil {
 		return err
 	}

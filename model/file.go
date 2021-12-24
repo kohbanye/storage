@@ -11,7 +11,6 @@ type DBFile struct {
 	gorm.Model
 	Name  string
 	Path  string
-	IsDir bool
 }
 
 func (f *DBFile) Create(rep *repository.Repository) (*DBFile, error) {
