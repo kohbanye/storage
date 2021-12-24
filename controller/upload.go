@@ -8,10 +8,21 @@ import (
 	"path/filepath"
 
 	"github.com/kohbanye/storage/config"
+	"github.com/kohbanye/storage/repository"
 	"github.com/labstack/echo/v4"
 )
 
-func Upload(c echo.Context) error {
+type UploadController struct {
+	Repository *repository.Repository
+}
+
+func NewUploadController(repository *repository.Repository) *UploadController {
+	return &UploadController{
+		Repository: repository,
+	}
+}
+
+func (controller *UploadController) Upload(c echo.Context) error {
 	file, err := c.FormFile("file")
 	if err != nil {
 		return err
