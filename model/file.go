@@ -9,10 +9,10 @@ const maxRecentFiles = 100
 
 type DBFile struct {
 	gorm.Model
-	Name     string
-	Path		 string
-	Modified string
-	Size     int64
+	Name     string `json:"name"`
+	Path     string `json:"path"`
+	Modified string `json:"modified"`
+	Size     int64  `json:"size"`
 }
 
 func (f *DBFile) Create(rep *repository.Repository) (*DBFile, error) {
