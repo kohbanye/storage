@@ -1,4 +1,4 @@
-import { MyFile } from 'lib/api'
+import { DBFile, MyFile } from 'lib/api'
 
 const units: Map<Intl.RelativeTimeFormatUnit, number> = new Map()
 units.set('year', 24 * 60 * 60 * 1000 * 365)
@@ -26,7 +26,7 @@ const getRelativeTime = (from: Date, to = new Date()) => {
   return result
 }
 
-export const useRelativeTimes = (files: MyFile[]) => {
+export const useRelativeTimes = (files: MyFile[] | DBFile[]) => {
   if (files === null) {
     return null
   }

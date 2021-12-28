@@ -4,14 +4,14 @@ import Image from 'next/image'
 import { icon } from 'styles/globals'
 import FolderIcon from '@mui/icons-material/Folder'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
-import { MyFile } from 'lib/api'
+import { DBFile, MyFile } from 'lib/api'
 import { useRouter } from 'next/router'
 import { useRelativeTimes } from './use/useRelativeTime'
 import { fileSizeToString } from 'lib/unit'
 import emptyFolder from 'assets/empty_folder.svg'
 
 interface TableProps {
-  files: MyFile[]
+  files: MyFile[] | DBFile[]
 }
 
 const DirectoryTable = ({ files }: TableProps) => {
@@ -53,7 +53,7 @@ const DirectoryTable = ({ files }: TableProps) => {
           {files.map((file, index) => (
             <tr key={file.name} css={tableRow}>
               <td>
-                {file.isDir ? (
+                {'isDir' in file && file.isDir ? (
                   <Link href={`${router.asPath}/${file.name}`}>
                     <a css={[directory, directoryName]}>
                       <FolderIcon css={iconStyle} />
@@ -63,20 +63,27 @@ const DirectoryTable = ({ files }: TableProps) => {
                 ) : (
                   <div css={directoryName}>
                     <InsertDriveFileIcon css={iconStyle} />
-                    {file.name}
+                    {'path' in file ? file.path : file.name}
                   </div>
                 )}
               </td>
               <td align="center">{relativeTimes[index]}</td>
               <td align="center">
-                {file.isDir ? '---' : fileSizeToString(file.size)}
+                {'isDir' in file && file.isDir
+                  ? '---'
+                  : fileSizeToString(file.size)}
               </td>
             </tr>
           ))}
         </table>
       ) : (
         <div css={emptyMessage}>
-          <Image src={emptyFolder} alt="empty folder" width="100" height="100" />
+          <Image
+            src={emptyFolder}
+            alt="empty folder"
+            width="100"
+            height="100"
+          />
           <div css={messageHeader}>This folder is empty.</div>
           <div css={messageContent}>You can add files and folders.</div>
         </div>
