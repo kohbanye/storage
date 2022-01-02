@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"time"
 
 	"github.com/kohbanye/storage/config"
@@ -113,5 +114,17 @@ func (controller *StorageController) GetRecentFiles(c echo.Context) error {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, files)
+	base := config.GetConfig().DataDir
+	re := regexp.MustCompile(`^` + base)
+	ret := make([]model.DBFile, len(files))
+	for i, file := range files {
+		ret[i] = model.DBFile{
+			Name:     file.Name,
+			Path:     re.Split(file.Path, -1)[1],
+			Modified: file.Modified,
+			Size:     file.Size,
+		}
+	}
+
+	return c.JSON(http.StatusOK, ret)
 }
