@@ -14,6 +14,7 @@ func Init(e *echo.Echo, rep *repository.Repository) {
 
 	api.GET("/", func(c echo.Context) error { return storage.GetFiles(c) })
 	api.POST("/new", func(c echo.Context) error { return storage.CreateFile(c) })
+	api.DELETE("/", func(c echo.Context) error { return storage.DeleteFile(c) })
 	api.POST("/", func(c echo.Context) error { return upload.Upload(c) })
 	api.GET("/recent", func(c echo.Context) error { return storage.GetRecentFiles(c) })
 }

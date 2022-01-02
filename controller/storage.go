@@ -128,3 +128,23 @@ func (controller *StorageController) GetRecentFiles(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, ret)
 }
+
+func (controller *StorageController) DeleteFile(c echo.Context) error {
+	path := c.QueryParam("path")
+
+	root := config.GetConfig().DataDir
+	path = root + path
+
+	err := os.RemoveAll(path)
+	if err != nil {
+		return err
+	}
+
+	dbFile := &model.DBFile{Path: path}
+	err = dbFile.DeleteFile(controller.Repository)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, "file deleted")
+}

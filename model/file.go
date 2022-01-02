@@ -31,3 +31,7 @@ func (f *DBFile) GetRecentFiles(rep *repository.Repository) ([]*DBFile, error) {
 	}
 	return files, nil
 }
+
+func (f *DBFile) DeleteFile(rep *repository.Repository) error {
+	return rep.DB.Where("path = ?", f.Path).Delete(f).Error
+}
