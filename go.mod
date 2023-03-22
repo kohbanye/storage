@@ -9,7 +9,9 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/spf13/viper v1.9.0
-	golang.org/x/crypto v0.1.0 // indirect
+	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e // indirect
+	golang.org/x/net v0.0.0-20211205041911-012df41ee64c // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gorm.io/driver/mysql v1.2.1
 	gorm.io/gorm v1.22.4
